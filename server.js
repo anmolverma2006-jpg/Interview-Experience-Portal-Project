@@ -1,4 +1,9 @@
 import express from 'express';
+
+app.get("/", (req, res) => {
+    res.send("Backend is working!");
+});
+
 import cors from 'cors';
 import dotenv from 'dotenv';
 import pg from 'pg';
