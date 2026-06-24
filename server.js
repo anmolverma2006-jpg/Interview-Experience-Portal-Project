@@ -9,6 +9,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+console.log("PORT =", process.env.PORT);
+
 app.get("/", (req, res) => {
     res.send("Backend is working!");
 });
