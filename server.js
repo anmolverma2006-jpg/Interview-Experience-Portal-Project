@@ -1,9 +1,4 @@
 import express from 'express';
-
-app.get("/", (req, res) => {
-    res.send("Backend is working!");
-});
-
 import cors from 'cors';
 import dotenv from 'dotenv';
 import pg from 'pg';
@@ -13,6 +8,10 @@ import session from 'express-session';
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+app.get("/", (req, res) => {
+    res.send("Backend is working!");
+});
 
 const db = new pg.Pool({
     user: process.env.PG_USER,
