@@ -9,20 +9,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-console.log("PORT =", process.env.PORT);
-
-app.use((req, res, next) => {
-    console.log(`${req.method} ${req.url}`);
-    next();
-});
-
-app.get("/", (req, res) => {
-    console.log("Root route hit");
-    res.status(200).json({
-        message: "Backend is working!"
-    });
-});
-
 const db = new pg.Pool({
     user: process.env.PG_USER,
     host: process.env.PG_HOST,
