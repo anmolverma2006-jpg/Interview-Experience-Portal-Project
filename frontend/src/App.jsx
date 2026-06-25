@@ -17,7 +17,7 @@ function App() {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const res = await axios.get('http://localhost:4000/api/check-auth', { withCredentials: true });
+        const res = await axios.get('/api/check-auth', { withCredentials: true });
         setIsAuthenticated(true);
         setUser(res.data.user);
       } catch {
@@ -37,7 +37,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:4000/logout', {}, { withCredentials: true });
+      await axios.post('/logout', {}, { withCredentials: true });
     } catch {}
     setIsAuthenticated(false);
     setUser(null);

@@ -4,21 +4,36 @@ import dotenv from 'dotenv';
 import pg from 'pg';
 import bcrypt from 'bcrypt';
 import session from 'express-session';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-const db = new pg.Pool({
-    user: process.env.PG_USER,
-    host: process.env.PG_HOST,
-    database: process.env.PG_DATABASE,
-    password: process.env.PG_PASSWORD,
-    port: process.env.PG_PORT,
-});
+const dbConfig = process.env.DATABASE_URL
+    ? {
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+            rejectUnauthorized: false
+        }
+      }
+    : {
+        user: process.env.PG_USER,
+        host: process.env.PG_HOST,
+        database: process.env.PG_DATABASE,
+        password: process.env.PG_PASSWORD,
+        port: parseInt(process.env.PG_PORT || '5432'),
+      };
+const db = new pg.Pool(dbConfig);
+
+app.set('trust proxy', 1);
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: process.env.NODE_ENV === 'production' ? true : 'http://localhost:5173',
     credentials: true
 }));
 app.use(express.json());
@@ -27,7 +42,11 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 }
+    cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 1000 * 60 * 60 * 24,
+        sameSite: 'lax'
+    }
 }));
 
 // REGISTER
@@ -216,6 +235,51 @@ app.delete('/api/experiences/:id', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
+// Database auto-initialization helper
+async function initDB() {
+    try {
+        await db.query(`
+            CREATE TABLE IF NOT EXISTS users (
+                id SERIAL PRIMARY KEY,
+                email VARCHAR(255) UNIQUE NOT NULL,
+                password_hash TEXT NOT NULL,
+                name VARCHAR(255),
+                branch VARCHAR(100),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        `);
+        await db.query(`
+            CREATE TABLE IF NOT EXISTS posts (
+                id SERIAL PRIMARY KEY,
+                user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+                company VARCHAR(255) NOT NULL,
+                role VARCHAR(255) NOT NULL,
+                content TEXT NOT NULL,
+                status VARCHAR(50) DEFAULT 'Waiting',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        `);
+        console.log("Database initialized successfully!");
+    } catch (err) {
+        console.error("Database initialization failed:", err.message);
+    }
+}
+
+// Serve static files from frontend/dist in production
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'frontend/dist')));
+    
+    // Serve index.html for all other routes to support React Router HTML5 History API
+    app.get('*', (req, res, next) => {
+        // Skip API routes
+        if (req.path.startsWith('/api') || req.path === '/login' || req.path === '/register' || req.path === '/logout') {
+            return next();
+        }
+        res.sendFile(path.join(__dirname, 'frontend/dist/index.html'));
+    });
+}
+
+app.listen(PORT, async () => {
+    await initDB();
     console.log(`Server running on http://localhost:${PORT}`);
 });

@@ -14,7 +14,7 @@ function Dashboard({ user }) {
 
   const fetchMyPosts = async () => {
     try {
-      const res = await axios.get('http://localhost:4000/api/my-posts', { withCredentials: true });
+      const res = await axios.get('/api/my-posts', { withCredentials: true });
       setPosts(res.data);
     } catch (err) {
       console.error('Failed to load posts', err);
@@ -35,7 +35,7 @@ function Dashboard({ user }) {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:4000/api/experiences/${editingPost}`,
+        `/api/experiences/${editingPost}`,
         editForm,
         { withCredentials: true }
       );
@@ -51,7 +51,7 @@ function Dashboard({ user }) {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/experiences/${id}`, { withCredentials: true });
+      await axios.delete(`/api/experiences/${id}`, { withCredentials: true });
       setIsError(false);
       setActionMsg('Post deleted.');
       setDeleteConfirmId(null);
