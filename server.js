@@ -270,7 +270,7 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'frontend/dist')));
     
     // Serve index.html for all other routes to support React Router HTML5 History API
-    app.get('/*', (req, res, next) => {
+    app.get(/.*/, (req, res, next) => {
         // Skip API routes
         if (req.path.startsWith('/api') || req.path === '/login' || req.path === '/register' || req.path === '/logout') {
             return next();
