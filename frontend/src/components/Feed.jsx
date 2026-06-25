@@ -72,11 +72,11 @@ function Feed({ isAuthenticated }) {
       {isLoading ? (
         <div style={{ textAlign: 'center', padding: '80px 0' }}>
           <div className="spinner" />
-          <p style={{ marginTop: 14, color: 'var(--text-muted)', fontSize: '0.875rem' }}>Loading experiences...</p>
+          <p style={{ marginTop: 14, color: '#9ca3af', fontSize: '0.875rem' }}>Loading experiences...</p>
         </div>
       ) : posts.length === 0 ? (
         <div className="glass-card" style={{ textAlign: 'center', padding: '70px 40px' }}>
-          <p style={{ color: 'var(--text-muted)', marginBottom: 22, fontSize: '0.9rem' }}>
+          <p style={{ color: '#9ca3af', marginBottom: 22, fontSize: '0.9rem' }}>
             No experiences posted yet. Be the first!
           </p>
           <button className="btn-gradient" onClick={() => navigate(isAuthenticated ? '/create' : '/register')}>
@@ -84,8 +84,8 @@ function Feed({ isAuthenticated }) {
           </button>
         </div>
       ) : filteredPosts.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--text-muted)' }}>
-          <p>No results for "<strong style={{ color: 'var(--text-secondary)' }}>{searchTerm}</strong>"</p>
+        <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
+          <p>No results for "<strong style={{ color: '#4b5563' }}>{searchTerm}</strong>"</p>
         </div>
       ) : (
         filteredPosts.map((post) => (

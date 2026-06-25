@@ -42,7 +42,7 @@ function Profile({ user }) {
     return (
       <div style={{ textAlign: 'center', padding: '80px 0' }}>
         <div className="spinner" />
-        <p style={{ marginTop: 14, color: 'var(--text-muted)', fontSize: '0.875rem' }}>Loading profile...</p>
+        <p style={{ marginTop: 14, color: '#9ca3af', fontSize: '0.875rem' }}>Loading profile...</p>
       </div>
     );
   }
@@ -91,7 +91,7 @@ function Profile({ user }) {
       <div className="profile-info-grid">
         <div className="profile-info-item">
           <div className="profile-info-label">User ID</div>
-          <div className="profile-info-value" style={{ fontFamily: 'monospace', color: 'var(--text-muted)' }}>
+          <div className="profile-info-value" style={{ fontFamily: 'monospace', color: '#9ca3af' }}>
             #{profile.id}
           </div>
         </div>
@@ -120,7 +120,7 @@ function Profile({ user }) {
 
         <div className="profile-info-item">
           <div className="profile-info-label">Posts Shared</div>
-          <div className="profile-info-value" style={{ color: 'var(--blue-600)' }}>
+          <div className="profile-info-value" style={{ color: '#2563eb' }}>
             {postCount}
           </div>
         </div>

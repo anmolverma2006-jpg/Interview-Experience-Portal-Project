@@ -96,11 +96,11 @@ function Dashboard({ user }) {
       {isLoading ? (
         <div style={{ textAlign: 'center', padding: '80px 0' }}>
           <div className="spinner" />
-          <p style={{ marginTop: 16, color: 'var(--text-muted)' }}>Loading your posts...</p>
+          <p style={{ marginTop: 16, color: '#9ca3af' }}>Loading your posts...</p>
         </div>
       ) : posts.length === 0 ? (
         <div className="glass-card" style={{ textAlign: 'center', padding: '80px 40px' }}>
-          <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', marginBottom: 24 }}>
+          <p style={{ fontSize: '0.95rem', color: '#9ca3af', marginBottom: 24 }}>
             You haven't shared any experiences yet.
           </p>
           <button className="btn-gradient" onClick={() => navigate('/create')}>
@@ -137,7 +137,7 @@ function Dashboard({ user }) {
 
             {deleteConfirmId === post.id && (
               <div className="confirm-dialog">
-                <p style={{ color: 'var(--text-secondary)', marginBottom: 16, fontSize: '0.875rem' }}>
+                <p style={{ color: '#4b5563', marginBottom: 16, fontSize: '0.875rem' }}>
                   Are you sure you want to delete this post? This cannot be undone.
                 </p>
                 <div className="flex gap-3">

@@ -69,7 +69,7 @@ function Auth({ onLoginSuccess, initialIsLogin }) {
     <div className="auth-page">
       <div className="auth-card">
         <div className="auth-logo">
-          <div className="auth-logo-icon">D</div>
+          <div className="auth-logo-icon">🎓</div>
           <h1 className="auth-title">
             {isLogin ? 'Welcome back' : 'Create an account'}
           </h1>
@@ -187,7 +187,7 @@ function Auth({ onLoginSuccess, initialIsLogin }) {
             type="button"
             onClick={() => switchMode(!isLogin)}
             style={{
-              background: 'none', border: 'none', color: 'var(--accent-light)',
+              background: 'none', border: 'none', color: '#2563eb',
               fontWeight: 600, cursor: 'pointer', padding: 0,
               fontFamily: 'inherit', fontSize: 'inherit'
             }}

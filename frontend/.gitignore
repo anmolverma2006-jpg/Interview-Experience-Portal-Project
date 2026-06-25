@@ -20,3 +20,9 @@ Thumbs.db
 *.ntvs*
 *.njsproj
 *.sln
+
+# Production build outputs
+dist/
+dist
+out/
+build/
