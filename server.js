@@ -17,7 +17,10 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-    res.send("Backend is working!");
+    console.log("Root route hit");
+    res.status(200).json({
+        message: "Backend is working!"
+    });
 });
 
 const db = new pg.Pool({
